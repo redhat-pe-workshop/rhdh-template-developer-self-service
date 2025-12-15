@@ -54,8 +54,6 @@ spec:
         repoUrl: "{{ gitlab_host }}?owner={{ '${{ parameters.namespace_owner }}' }}&repo={{ '${{ parameters.component_id }}' }}-gitops"
         repoVisibility: public
         defaultBranch: main
-        title: gitops resources for {{ '${{ parameters.component_id }}' }}
-        description: gitops resources for {{ '${{ parameters.component_id }}' }}
         sourcePath: {{ './${{ parameters.namespace_owner }}-${{ parameters.component_id }}-gitops' }}
 
     - id: create-argocd-resources

@@ -1,0 +1,11 @@
+apiVersion: v2
+name: ${{ values.name }}-build
+description: ${{ values.name }} secured build pipeline
+type: application
+version: 0.1.0
+
+dependencies:
+  - name: build-deployer
+    version: "~0.1"
+    repository: "${{ values.chart_repo_url }}"
+    alias: build

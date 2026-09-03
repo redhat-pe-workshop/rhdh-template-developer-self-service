@@ -1,0 +1,37 @@
+app:
+  name: ${{ values.name }}
+
+  namespace:
+    name: ${{ values.name }}-dev
+    create: false
+    istio:
+      enabled: true
+
+  image:
+    repository: ${{ values.image_host }}/${{ values.image_organization }}/${{ values.image_name }}
+    tag: ${{ values.image_tag }}
+
+  environment: dev
+  runtime: quarkus
+
+  replicas: 1
+
+  route:
+    enabled: true
+
+  waypoint:
+    enabled: true
+
+  envValueFrom:
+    - name: QUARKUS_LANGCHAIN4J_OPENAI_API_KEY
+      valueFrom:
+        secretKeyRef:
+          name: ${{ values.name }}-litellm
+          key: QUARKUS_LANGCHAIN4J_OPENAI_API_KEY
+    - name: QUARKUS_LANGCHAIN4J_OPENAI_BASE_URL
+      valueFrom:
+        secretKeyRef:
+          name: ${{ values.name }}-litellm
+          key: QUARKUS_LANGCHAIN4J_OPENAI_BASE_URL
+
+  vcsUri: "${{ values.source_repo }}"

@@ -1,0 +1,15 @@
+site_name: ${{ values.name }}
+site_description: ${{ values.description }}
+repo_url: https://${{ values.gitlab_host }}/${{ values.gitlab_group }}/${{ values.name }}
+edit_uri: edit/main/docs
+
+plugins:
+  - techdocs-core
+
+nav:
+  - Overview: index.md
+  - Application Overview: application-overview.md
+  - Development Environment: development-environment.md
+  - Deployment with Argo CD: deployment-with-argocd.md
+  - Build and CI/CD Pipeline: build-and-cicd-pipeline.md
+  - Configuration Management: configuration-management.md

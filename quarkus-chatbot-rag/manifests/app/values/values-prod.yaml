@@ -1,0 +1,42 @@
+app:
+  name: ${{ values.name }}
+
+  namespace:
+    name: ${{ values.name }}-prod
+    create: false
+    istio:
+      enabled: true
+
+  image:
+    repository: ${{ values.image_host }}/${{ values.image_organization }}/${{ values.image_name }}
+    tag: latest
+
+  environment: prod
+  runtime: quarkus
+
+  replicas: 2
+
+  route:
+    enabled: true
+
+  waypoint:
+    enabled: true
+
+  hpa:
+    enabled: true
+    minReplicas: 2
+    maxReplicas: 5
+
+  envValueFrom:
+    - name: QUARKUS_LANGCHAIN4J_OPENAI_API_KEY
+      valueFrom:
+        secretKeyRef:
+          name: ${{ values.name }}-litellm
+          key: QUARKUS_LANGCHAIN4J_OPENAI_API_KEY
+    - name: QUARKUS_LANGCHAIN4J_OPENAI_BASE_URL
+      valueFrom:
+        secretKeyRef:
+          name: ${{ values.name }}-litellm
+          key: QUARKUS_LANGCHAIN4J_OPENAI_BASE_URL
+
+  vcsUri: "${{ values.source_repo }}"

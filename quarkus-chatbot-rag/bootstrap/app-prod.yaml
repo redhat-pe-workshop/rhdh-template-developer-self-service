@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ${{ values.name }}-prod
+  namespace: ${{ values.gitops_namespace }}
+  labels:
+    rhdh.redhat.com/app-name: ${{ values.name }}
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: ${{ values.name }}-prod
+    server: https://kubernetes.default.svc
+  project: ${{ values.argocd_project }}
+  source:
+    path: app
+    repoURL: https://${{ values.gitlab_host }}/${{ values.owner }}/${{ values.name }}-gitops.git
+    targetRevision: main
+    helm:
+      valueFiles:
+        - values/values-prod.yaml
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - RespectIgnoreDifferences=true

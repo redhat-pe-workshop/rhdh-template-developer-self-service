@@ -1,0 +1,39 @@
+build:
+  name: ${{ values.name }}
+
+  namespace:
+    name: ${{ values.name }}-build
+    create: false
+    istio:
+      enabled: false
+
+  source:
+    repoUrl: ${{ values.source_repo }}
+    branch: main
+
+  image:
+    host: ${{ values.image_host }}
+    organization: ${{ values.image_organization }}
+    name: ${{ values.image_name }}
+    tag: ${{ values.image_tag }}
+
+  clusterSubdomain: ${{ values.cluster_subdomain }}
+  gitlabHost: ${{ values.gitlab_host }}
+
+  owner: ${{ values.owner }}
+
+  pipeline:
+    tasks:
+      buildAndPush:
+        dockerfile: src/main/docker/Dockerfile.jvm
+
+  webhook:
+    sourceProjectPath: ${{ values.owner }}/${{ values.name }}
+
+  secrets:
+    gitlabWebhook:
+      vaultKey: secrets/${{ values.name }}/webhook-secret
+
+  promotion:
+    manifestsRepoPath: ${{ values.owner }}/${{ values.name }}-gitops
+    prodValuesFile: app/values/values-prod.yaml

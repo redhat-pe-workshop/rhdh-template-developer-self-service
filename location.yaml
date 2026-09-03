@@ -8,3 +8,4 @@ spec:
     - ./postgres15/template.yaml
     - ./namespace/template-small.yaml
     - ./namespace/template-large.yaml
+    - ./quarkus-chatbot-rag/template.yaml

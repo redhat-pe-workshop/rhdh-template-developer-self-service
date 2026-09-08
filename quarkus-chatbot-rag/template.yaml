@@ -59,7 +59,7 @@ spec:
           description: Quay organization (e.g. parasol, myorg)
           default: parasol
 
-  # Jinja variables (gitlab-gitlab.apps.cluster-8qph6.dyn.redhatworkshops.io, quay.apps.cluster-8qph6.dyn.redhatworkshops.io, etc.) are replaced with
+  # Jinja variables ({{ gitlab_host }}, {{ quay_host }}, etc.) are replaced with
   # cluster-specific values when the Ansible import job pushes templates to GitLab
   # during cluster setup. They are NOT Backstage scaffolder expressions.
   steps:
@@ -74,14 +74,14 @@ spec:
           description: ${{ parameters.description }}
           owner: ${{ parameters.owner }}
           gitlab_group: parasol
-          gitlab_host: gitlab-gitlab.apps.cluster-8qph6.dyn.redhatworkshops.io
-          cluster_subdomain: apps.cluster-8qph6.dyn.redhatworkshops.io
+          gitlab_host: {{ gitlab_host }}
+          cluster_subdomain: {{ cluster_subdomain }}
 
     - id: publish-source
       name: Publish Source to GitLab
       action: publish:gitlab
       input:
-        repoUrl: gitlab-gitlab.apps.cluster-8qph6.dyn.redhatworkshops.io?owner=parasol&repo=${{ parameters.name }}
+        repoUrl: {{ gitlab_host }}?owner=parasol&repo=${{ parameters.name }}
         sourcePath: source
         defaultBranch: main
         repoVisibility: public
@@ -96,21 +96,21 @@ spec:
           name: ${{ parameters.name }}
           owner: parasol
           source_repo: ${{ steps['publish-source'].output.remoteUrl }}.git
-          image_host: quay.apps.cluster-8qph6.dyn.redhatworkshops.io
+          image_host: {{ quay_host }}
           image_organization: ${{ parameters.imageOrganization }}
           image_name: ${{ parameters.name }}
           image_tag: latest
-          gitlab_host: gitlab-gitlab.apps.cluster-8qph6.dyn.redhatworkshops.io
-          cluster_subdomain: apps.cluster-8qph6.dyn.redhatworkshops.io
+          gitlab_host: {{ gitlab_host }}
+          cluster_subdomain: {{ cluster_subdomain }}
           gitops_namespace: openshift-gitops
           argocd_project: developer-apps
-          chart_repo_url: https://redhat-pe-workshop.github.io/ocp-app-platform-demo-apps-helm
+          chart_repo_url: {{ chart_repo_url }}
 
     - id: publish-manifests
       name: Publish Manifests to GitLab
       action: publish:gitlab
       input:
-        repoUrl: gitlab-gitlab.apps.cluster-8qph6.dyn.redhatworkshops.io?owner=parasol&repo=${{ parameters.name }}-gitops
+        repoUrl: {{ gitlab_host }}?owner=parasol&repo=${{ parameters.name }}-gitops
         sourcePath: manifests
         defaultBranch: main
         repoVisibility: public

@@ -6,6 +6,6 @@ version: 0.1.0
 
 dependencies:
   - name: build-deployer
-    version: "~0.1"
+    version: "~0.2"
     repository: "${{ values.chart_repo_url }}"
     alias: build

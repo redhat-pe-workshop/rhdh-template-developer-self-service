@@ -104,7 +104,7 @@ spec:
           cluster_subdomain: apps.cluster-8qph6.dyn.redhatworkshops.io
           gitops_namespace: openshift-gitops
           argocd_project: developer-apps
-          chart_repo_url: https://redhat-ads-tech.github.io/ocp-app-platform-demo-apps-helm
+          chart_repo_url: https://redhat-pe-workshop.github.io/ocp-app-platform-demo-apps-helm
 
     - id: publish-manifests
       name: Publish Manifests to GitLab

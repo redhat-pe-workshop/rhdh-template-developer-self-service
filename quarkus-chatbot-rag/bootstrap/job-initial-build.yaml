@@ -1,0 +1,57 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: ${{ values.name }}-initial-build
+  namespace: ${{ values.name }}-build
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+spec:
+  ttlSecondsAfterFinished: 300
+  template:
+    spec:
+      serviceAccountName: ${{ values.name }}-build
+      restartPolicy: Never
+      containers:
+        - name: trigger-build
+          image: registry.redhat.io/openshift4/ose-cli:latest
+          command:
+            - /bin/bash
+            - -c
+            - |
+              set -e
+              
+              # Create initial PipelineRun to bind the maven-cache PVC
+              oc create -f - <<PIPELINERUN
+              apiVersion: tekton.dev/v1
+              kind: PipelineRun
+              metadata:
+                generateName: ${{ values.name }}-initial-
+                namespace: ${{ values.name }}-build
+              spec:
+                pipelineRef:
+                  name: ${{ values.name }}-push
+                params:
+                  - name: git-revision
+                    value: main
+                workspaces:
+                  - name: source
+                    volumeClaimTemplate:
+                      spec:
+                        accessModes:
+                          - ReadWriteOnce
+                        resources:
+                          requests:
+                            storage: 1Gi
+                  - name: basic-auth
+                    secret:
+                      secretName: gitlab-basic-auth
+                  - name: dockerconfig
+                    secret:
+                      secretName: quay-push-secret
+                  - name: maven-cache
+                    persistentVolumeClaim:
+                      claimName: ${{ values.name }}-maven-cache
+              PIPELINERUN
+              
+              echo "Initial build triggered successfully"

@@ -1,8 +1,8 @@
 package org.parasol;
 
-import jakarta.websocket.OnOpen;
 import io.quarkiverse.langchain4j.runtime.aiservice.GuardrailException;
 import io.quarkus.logging.Log;
+import io.quarkus.websockets.next.OnOpen;
 import io.quarkus.websockets.next.OnTextMessage;
 import io.quarkus.websockets.next.WebSocket;
 

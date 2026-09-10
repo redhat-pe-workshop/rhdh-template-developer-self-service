@@ -125,7 +125,7 @@ spec:
           name: ${{ parameters.name }}
           owner: parasol
           developer_group: ${{ parameters.developerGroup }}
-          gitlab_host: gitlab-gitlab.apps.cluster-8qph6.dyn.redhatworkshops.io
+          gitlab_host: {{ gitlab_host }}
           gitops_namespace: openshift-gitops
           argocd_project: developer-apps
 
@@ -133,7 +133,7 @@ spec:
       name: Push Bootstrap to Infrastructure Repo
       action: gitlab:repo:push
       input:
-        repoUrl: gitlab-gitlab.apps.cluster-8qph6.dyn.redhatworkshops.io?repo=infra-app-of-apps&owner=rhdh
+        repoUrl: {{ gitlab_host }}?repo=infra-app-of-apps&owner=rhdh
         branchName: main
         commitMessage: "feat: bootstrap ${{ parameters.name }} (build, dev, prod)"
         targetPath: app-bootstraps/${{ parameters.name }}

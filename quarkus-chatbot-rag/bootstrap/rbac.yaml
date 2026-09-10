@@ -14,6 +14,9 @@ subjects:
   - kind: ServiceAccount
     name: ${{ values.name }}-build
     namespace: ${{ values.name }}-build
+  - kind: ServiceAccount
+    name: pipeline
+    namespace: ${{ values.name }}-build
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding

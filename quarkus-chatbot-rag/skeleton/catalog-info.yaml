@@ -7,8 +7,8 @@ metadata:
     argocd/app-selector: rhdh.redhat.com/app-name=${{ values.name }}
     backstage.io/techdocs-ref: dir:.
     backstage.io/source-location: url:https://${{ values.gitlab_host }}/${{ values.gitlab_group }}/${{ values.name }}
-    backstage.io/kubernetes-namespace: ${{ values.name }}-dev
     backstage.io/kubernetes-id: ${{ values.name }}
+    backstage.io/kubernetes-label-selector: app.kubernetes.io/name=${{ values.name }}
     janus-idp.io/tekton: ${{ values.name }}-build
     gitlab.com/project-slug: ${{ values.gitlab_group }}/${{ values.name }}
     jira/project-key: ${{ values.name | upper }}

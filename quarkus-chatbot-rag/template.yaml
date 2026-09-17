@@ -124,7 +124,7 @@ spec:
         values:
           name: ${{ parameters.name }}
           owner: parasol
-          developer_group: ${{ parameters.developerGroup }}
+          developer_group: ${{ parameters.developerGroup | replace('group:default/', '') }}
           gitlab_host: {{ gitlab_host }}
           gitops_namespace: openshift-gitops
           argocd_project: developer-apps

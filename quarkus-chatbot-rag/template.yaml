@@ -158,11 +158,11 @@ spec:
     text:
       - title: Next Steps
         content: |
-          Argo CD Applications might take a moment to settle and deploy the initial environment.
-
           Your application has three environments:
           - **Build** (${{ parameters.name }}-build) — secured CI/CD pipeline
           - **Dev** (${{ parameters.name }}-dev) — development deployment
           - **Prod** (${{ parameters.name }}-prod) — production deployment
+
+          **Note:** Argo CD polls Git repositories every minute. It may take 1-2 minutes for the new Applications to appear on the **CD** tab of your component in the catalog.
 
           Push code to the source repository to trigger the build pipeline.

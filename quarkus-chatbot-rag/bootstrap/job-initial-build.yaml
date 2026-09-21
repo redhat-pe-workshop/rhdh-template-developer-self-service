@@ -28,6 +28,9 @@ spec:
               metadata:
                 generateName: ${{ values.name }}-initial-
                 namespace: ${{ values.name }}-build
+                labels:
+                  app.kubernetes.io/name: ${{ values.name }}
+                  backstage.io/kubernetes-id: ${{ values.name }}
               spec:
                 pipelineRef:
                   name: ${{ values.name }}-push

@@ -85,6 +85,8 @@ spec:
         sourcePath: source
         defaultBranch: main
         repoVisibility: public
+        settings:
+          auto_devops_enabled: false
 
     - id: fetch-manifests
       name: Fetch GitOps Manifests
@@ -114,6 +116,8 @@ spec:
         sourcePath: manifests
         defaultBranch: main
         repoVisibility: public
+        settings:
+          auto_devops_enabled: false
 
     - id: fetch-bootstrap
       name: Render Bootstrap Resources

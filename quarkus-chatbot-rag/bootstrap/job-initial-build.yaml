@@ -14,7 +14,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: trigger-build
-          image: registry.redhat.io/openshift4/ose-cli:latest
+          image: registry.redhat.io/openshift4/ose-cli:v4.15.0
           command:
             - /bin/bash
             - -c

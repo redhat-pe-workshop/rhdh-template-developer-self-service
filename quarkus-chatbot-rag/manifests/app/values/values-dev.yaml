@@ -5,7 +5,7 @@ app:
     name: ${{ values.name }}-dev
     create: false
     istio:
-      enabled: true
+      enabled: false
 
   image:
     repository: ${{ values.image_host }}/${{ values.image_organization }}/${{ values.image_name }}
@@ -20,7 +20,7 @@ app:
     enabled: true
 
   waypoint:
-    enabled: true
+    enabled: false
 
   envValueFrom:
     - name: QUARKUS_LANGCHAIN4J_OPENAI_API_KEY

@@ -5,6 +5,7 @@ metadata:
   description: ${{ values.description }}
   annotations:
     argocd/app-selector: rhdh.redhat.com/app-name=${{ values.name }}
+    argocd/instance-name: main
     backstage.io/techdocs-ref: dir:.
     backstage.io/source-location: url:https://${{ values.gitlab_host }}/${{ values.gitlab_group }}/${{ values.name }}
     backstage.io/kubernetes-id: ${{ values.name }}
@@ -13,6 +14,7 @@ metadata:
     gitlab.com/project-slug: ${{ values.gitlab_group }}/${{ values.name }}
     jira/project-key: ${{ values.name | upper }}
     quay.io/repository-slug: parasol/${{ values.name }}
+    sonarqube.org/project-key: ${{ values.name }}
   links:
     - url: https://devspaces.${{ values.cluster_subdomain }}/#https://${{ values.gitlab_host }}/${{ values.gitlab_group }}/${{ values.name }}
       title: Open in Dev Spaces
